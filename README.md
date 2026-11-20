@@ -1,34 +1,34 @@
 # Got Liquidated Trading ANT
 
-一则关于 Anthropic、Claude 和模拟盘的虚构交易日志。
+A fictional paper trading log featuring Claude from Anthropic.
 
-| 时间 | 记录 |
+| Time | Log |
 | --- | --- |
-| 09:30 | 我把一张价格图发给 Claude，问它接下来会涨还是跌。 |
-| 09:31 | Claude 说，图的右边是空白。 |
-| 09:32 | 我把这句话理解成了上涨空间。 |
-| 09:36 | 模拟盘爆仓。 |
-| 09:37 | 我把图发了回去。Claude 说，现在右边有东西了。 |
+| 09:30 | I sent Claude a price chart and asked whether it would go up or down. |
+| 09:31 | Claude said the right side of the chart was blank. |
+| 09:32 | I took that to mean there was room to go up. |
+| 09:36 | My paper position got liquidated. |
+| 09:37 | I sent the chart back. Claude said, "There is something on the right side of the chart now." |
 
-## 盘后复盘
+## After-hours debrief
 
-**我**：这笔交易是按计划执行的。
+**Me** — I followed the plan.
 
-**Claude**：计划是什么？
+**Claude** — What was the plan?
 
-**我**：先开仓，再想计划。
+**Me** — Open the position first. Come up with a plan later.
 
-Claude 在「执行情况」一栏打了勾。右边那格叫「交易计划」，还是空白。
+Claude checked the box under “Execution.” The box to its right, “Trading Plan,” was still blank.
 
-## 在终端重播爆仓
+## Replay the liquidation
 
-需要 Python 3，无需安装第三方依赖。在仓库目录运行：
+Run either command from the repository root with Python 3. The simulator uses only the standard library.
 
 ```sh
 python simulate.py
 python simulate.py --leverage 2 103 97 90.40 88
 ```
 
-默认以 100.00 的价格、100.00 的保证金和 10 倍杠杆开一笔模拟多仓。每个价格都会更新账户权益和维持保证金。权益低于或等于维持保证金时，脚本打印 `LIQUIDATED` 并停止回放。
+By default, the simulator opens a long position at 100.00 with 100.00 in initial margin and 10× leverage. At each price, it updates the account equity and maintenance margin. When equity falls to or below the maintenance margin, the script prints `LIQUIDATED` and stops the replay.
 
-第二条命令用 2 倍杠杆重播自选价格。把最后一组数字换成自己的行情，或运行 `python simulate.py --help` 查看参数。这个简化模型使用固定的 0.5% 维持保证金率，忽略手续费和滑点。
+The second command replays a custom price sequence at 2× leverage. Replace the prices after `--leverage 2` with your own, or run `python simulate.py --help` for the available options. The model uses a fixed maintenance margin rate of 0.5% and ignores fees and slippage.
